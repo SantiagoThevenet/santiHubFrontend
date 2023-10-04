@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-center justify-between py-10 px-8">
+  <nav class="flex items-center justify-between py-10 px-8 border border-gray-200">
     <h2 class=""><a href="">Logo</a></h2>
     <ul class="flex gap-10">
       <li>

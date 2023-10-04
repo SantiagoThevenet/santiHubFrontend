@@ -2,7 +2,5 @@
 </script>
 
 <template>
-  <main>
-    <h1>Wellcome</h1>
-  </main>
+<h1>Hola</h1>
 </template>

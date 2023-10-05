@@ -1,9 +1,9 @@
 <template>
-  <nav class="flex items-center justify-between py-10 px-8 border border-gray-200">
+  <nav class="flex items-center justify-between py-10 px-[10%] border border-gray-200">
     <h2 class=""><a href="">Logo</a></h2>
     <ul class="flex gap-10">
       <li>
-        <a href="">
+        <RouterLink to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -18,7 +18,7 @@
               d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
             />
           </svg>
-        </a>
+        </RouterLink>
       </li>
       <li>
         <a href="">

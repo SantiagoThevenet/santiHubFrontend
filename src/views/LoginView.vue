@@ -13,7 +13,7 @@
         </p>
         <p class="text-gray-700 text-sm">
           Don't have an account?
-          <b class="text-gray-800 underline">Click here</b> to create one!
+          <RouterLink to="/signup"><b class="text-gray-800 underline">Click here</b></RouterLink> to create one!
         </p>
       </section>
       <section class="bg-white rounded-lg w-full border border-gray-200 p-8">

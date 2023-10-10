@@ -1,8 +1,10 @@
 
 <template>
-    <nav class="flex items-center justify-between py-10 px-[10%] border border-gray-200">
+  <nav
+    class="flex items-center justify-between py-10 px-[10%] border border-gray-200"
+  >
     <h2 class=""><a href="">Logo</a></h2>
-    <ul class="flex gap-10">
+    <ul class="flex gap-10" v-if="userStore.user.isAuthenticated">
       <li>
         <RouterLink to="/feed">
           <svg
@@ -76,24 +78,55 @@
         </RouterLink>
       </li>
     </ul>
-    <a href=""
-      ><img
-        class="rounded-full w-14 h-14 object-cover"
-        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
-        alt=""
-    /></a>
+    <div>
+      <template v-if="userStore.user.isAuthenticated">
+        <a href=""
+          ><img
+            class="rounded-full w-14 h-14 object-cover"
+            src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+            alt=""
+        /></a>
+      </template>
+      <template v-else>
+        <RouterLink class="bg-gray-500 text-white py-3 px-6 rounded-md" to="/login">Log in</RouterLink>
+        <RouterLink class="bg-indigo-500 text-white py-3 px-6 ml-4 rounded-md" to="/signup">Sign up</RouterLink>
+      </template>
+    </div>
   </nav>
 
   <RouterView />
   <Toast />
-
 </template>
 
-<script >
-import Toast from "./components/Toast.vue";
+<script>
+import axios from "axios";
+import Toast from "@/components/Toast.vue";
+import { useUserStore } from "@/stores/user";
+import { RouterView } from "vue-router";
+
 export default {
+  setup() {
+    const userStore = useUserStore();
+    return {
+      userStore,
+    };
+  },
+
   components: {
-    Toast
-  }
-}
+    Toast,
+    RouterView
+},
+
+  beforeCreate() {
+    this.userStore.initStore();
+
+    const token = this.userStore.user.access;
+    console.log(token)
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    } else {
+      axios.defaults.headers.common["Authorization"] = "";
+    }
+  },
+};
 </script>

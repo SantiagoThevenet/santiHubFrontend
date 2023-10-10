@@ -121,7 +121,6 @@ export default {
     this.userStore.initStore();
 
     const token = this.userStore.user.access;
-    console.log(token)
     if (token) {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     } else {

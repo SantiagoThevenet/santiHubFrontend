@@ -7,15 +7,12 @@
           src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
           alt=""
         />
-        <span class="text-3xl font-semibold">Santiago</span>
+        <span class="text-3xl font-semibold">{{postData.created_by.name}}</span>
       </div>
-      <span class="text-xl text-gray-700">18 minutes ago</span>
+      <span class="text-xl text-gray-700">{{postData.created_at_formatted}}</span>
     </section>
     <p class="p-4 text-xl">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias aliquid
-      ratione culpa quam cumque, obcaecati harum cupiditate ea porro velit ad
-      magnam quis esse aspernatur asperiores officiis. Laborum, quidem
-      doloremque!
+      {{ postData.body }}
     </p>
     <div class="flex justify-between py-8 px-4">
       <div class="flex gap-8">
@@ -73,3 +70,11 @@
     </div>
   </div>
 </template>
+
+<script>
+  export default {
+    props: {
+      postData: Object
+    }
+  }
+</script>

@@ -7,7 +7,11 @@
           src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
           alt=""
         />
-        <span class="text-3xl font-semibold">{{postData.created_by.name}}</span>
+        <RouterLink
+            :to="{ name: 'profile', params: { id: postData.created_by.id } }"
+            class="text-2xl font-bold text-gray-900"
+            >{{ postData.created_by.name }}</RouterLink
+          >
       </div>
       <span class="text-xl text-gray-700">{{postData.created_at_formatted}}</span>
     </section>

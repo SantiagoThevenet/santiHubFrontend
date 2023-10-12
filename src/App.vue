@@ -80,12 +80,12 @@
     </ul>
     <div>
       <template v-if="userStore.user.isAuthenticated">
-        <a href=""
+        <RouterLink :to="{name: 'profile', params: {id: userStore.user.id}}"
           ><img
             class="rounded-full w-14 h-14 object-cover"
             src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
             alt=""
-        /></a>
+        /></RouterLink>
       </template>
       <template v-else>
         <RouterLink class="bg-gray-500 text-white py-3 px-6 rounded-md" to="/login">Log in</RouterLink>

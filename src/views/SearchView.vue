@@ -48,7 +48,7 @@
             >{{ user.name }}</RouterLink
           >
           <div class="flex justify-between">
-            <span class="text-base text-gray-700">1000 <br />followers</span>
+            <span class="text-base text-gray-700">{{ user.friends_count }} <br />followers</span>
             <span class="text-base text-gray-700"
               >23 <br />
               post</span

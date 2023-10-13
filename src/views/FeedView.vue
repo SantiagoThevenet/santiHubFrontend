@@ -59,6 +59,7 @@ export default {
       axios
         .get("/api/posts/")
         .then(({ data }) => {
+          console.log(data)
           this.posts = data;
         })
         .catch((error) => console.log("error", error));

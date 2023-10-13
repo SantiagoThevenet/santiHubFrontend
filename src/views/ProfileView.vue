@@ -11,13 +11,26 @@
         />
         <span class="font-bold text-gray-900">{{ user.name }}</span>
         <div class="flex justify-between">
-          <span class="text-sm text-gray-800">1000 followers</span>
+          <RouterLink
+            :to="{ name: 'friends', params: { id: user.id } }"
+            class="text-sm text-gray-800"
+            >{{ user.friends_count }} followers</RouterLink
+          >
           <span class="text-sm text-gray-800">23 post</span>
         </div>
+        <button
+          class="bg-indigo-500 rounded-md py-3 px-6 text-white"
+          @click="sendFrendshipRequest"
+        >
+          Follow
+        </button>
       </div>
     </div>
     <div class="col-span-4 flex flex-col gap-4">
-      <div v-if="userStore.user.id === user.id" class="bg-white rounded-md border border-gray-200 p-10">
+      <div
+        v-if="userStore.user.id === user.id"
+        class="bg-white rounded-md border border-gray-200 p-10"
+      >
         <form
           class="flex flex-col"
           v-on:submit.prevent="submitForm"
@@ -55,11 +68,16 @@ import PeopleYouMayKnow from "../components/PeopleYouMayKnow.vue";
 import TrendsCard from "../components/TrendsCard.vue";
 import PostText from "../components/PostText.vue";
 import { useUserStore } from "@/stores/user";
+import { useToastStore } from "@/stores/toast";
+
 export default {
   setup() {
     const userStore = useUserStore();
+    const toastStore = useToastStore();
+
     return {
       userStore,
+      toastStore,
     };
   },
   components: {
@@ -70,7 +88,7 @@ export default {
   data() {
     return {
       posts: [],
-      user: {}, 
+      user: {},
       body: "",
     };
   },
@@ -78,13 +96,13 @@ export default {
     this.getFeed();
   },
   watch: {
-    '$route.params.id': {
-      handler: function() {
-        this.getFeed()
+    "$route.params.id": {
+      handler: function () {
+        this.getFeed();
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     getFeed() {
@@ -92,7 +110,7 @@ export default {
         .get(`/api/posts/profile/${this.$route.params.id}/`)
         .then(({ data }) => {
           this.posts = data.posts;
-          this.user = data.user
+          this.user = data.user;
         })
         .catch((error) => console.log("error", error));
     },
@@ -102,6 +120,27 @@ export default {
         .then((response) => {
           this.posts.unshift(response.data);
           this.body = "";
+        })
+        .catch((error) => console.log(error));
+    },
+    sendFrendshipRequest() {
+      axios
+        .post(`/api/friends/${this.$route.params.id}/request/`)
+        .then((response) => {
+          console.log("data", response.data);
+          if (response.data.message == "friendship request created") {
+            this.toastStore.showToast(
+              5000,
+              "The request has already been sent!",
+              "bg-red-300"
+            );
+          } else {
+            this.toastStore.showToast(
+              5000,
+              "The request was sent!",
+              "bg-esmerald-300"
+            );
+          }
         })
         .catch((error) => console.log(error));
     },

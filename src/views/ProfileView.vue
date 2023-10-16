@@ -20,9 +20,17 @@
         </div>
         <button
           class="bg-indigo-500 rounded-md py-3 px-6 text-white"
+          v-if="userStore.user.id !== user.id"
           @click="sendFrendshipRequest"
         >
           Follow
+        </button>
+        <button
+          class="bg-red-500 rounded-md py-3 px-6 text-white"
+          v-else
+          @click="logout"
+        >
+          Log out
         </button>
       </div>
     </div>
@@ -138,12 +146,16 @@ export default {
             this.toastStore.showToast(
               5000,
               "The request was sent!",
-              "bg-esmerald-300"
+              "bg-emerald-300"
             );
           }
         })
         .catch((error) => console.log(error));
     },
+    logout() {
+      this.userStore.removeToken()
+      this.$router.push('/login')
+    }
   },
 };
 </script>

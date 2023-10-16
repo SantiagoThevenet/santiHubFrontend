@@ -144,7 +144,7 @@ export default {
       axios
         .get(`/api/friends/${this.$route.params.id}/`)
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           this.friendshipRequests = response.data.requests;
           this.friends = response.data.friends;
           this.user = response.data.user;

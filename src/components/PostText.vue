@@ -8,9 +8,9 @@
           alt=""
         />
         <RouterLink
-          :to="{ name: 'profile', params: { id: postData.created_by.id } }"
+          :to="{ name: 'profile', params: { id: postData.created_by?.id } }"
           class="text-2xl font-bold text-gray-900"
-          >{{ postData.created_by.name }}</RouterLink
+          >{{ postData.created_by?.name }}</RouterLink
         >
       </div>
       <span class="text-xl text-gray-700">{{
@@ -22,7 +22,7 @@
     </p>
     <div class="flex justify-between py-8 px-4">
       <div class="flex gap-8">
-        <div @click="likePost(postData.id)" class="flex items-center gap-2">
+        <div @click="likePost(postData?.id)" class="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -54,7 +54,11 @@
               d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
             />
           </svg>
-          <span class="text-gray-700">0 comments</span>
+          <RouterLink
+            :to="{ name: 'postview', params: { id: postData?.id } }"
+            class="text-gray-700"
+            >{{ postData.comments_count }} comments</RouterLink
+          >
         </div>
       </div>
       <button>
@@ -79,23 +83,26 @@
 
 <script>
 import axios from "axios";
+import { RouterLink } from "vue-router";
 export default {
   props: {
-    postData: Object,
+    postData: Object
   },
   methods: {
     likePost(id) {
       axios
         .post(`/api/posts/${id}/like/`)
-        .then(({data}) => {
-          if (data.message === 'like created') {
-            this.postData.likes_count+=1
+        .then(({ data }) => {
+          if (data.message === "like created") {
+            this.postData.likes_count += 1;
           }
         })
-        .catch(err => {
-          console.log('error', err)
-        })
+        .catch((err) => {
+          console.log("error", err);
+        });
     },
   },
+  components: { RouterLink },
+
 };
 </script>

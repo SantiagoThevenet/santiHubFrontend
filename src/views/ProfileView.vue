@@ -21,9 +21,16 @@
         <button
           class="bg-indigo-500 rounded-md py-3 px-6 text-white"
           v-if="userStore.user.id !== user.id"
-          @click="sendFrendshipRequest"
+          @click="sendFriendshipRequest"
         >
           Follow
+        </button>
+        <button
+          class="bg-indigo-500 rounded-md py-3 px-6 text-white"
+          v-if="userStore.user.id !== user.id"
+          @click="sendDirectMessage"
+        >
+          Send Message
         </button>
         <button
           class="bg-red-500 rounded-md py-3 px-6 text-white"
@@ -113,6 +120,18 @@ export default {
     },
   },
   methods: {
+    sendDirectMessage() {
+      axios
+        .get(`/api/chat/${this.$route.params.id}/get-or-create/`)
+        .then((response) => {
+          console.log(response.data);
+
+          this.$router.push("/chat");
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
     getFeed() {
       axios
         .get(`/api/posts/profile/${this.$route.params.id}/`)
@@ -131,7 +150,7 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    sendFrendshipRequest() {
+    sendFriendshipRequest() {
       axios
         .post(`/api/friends/${this.$route.params.id}/request/`)
         .then((response) => {
@@ -153,9 +172,9 @@ export default {
         .catch((error) => console.log(error));
     },
     logout() {
-      this.userStore.removeToken()
-      this.$router.push('/login')
-    }
+      this.userStore.removeToken();
+      this.$router.push("/login");
+    },
   },
 };
 </script>
